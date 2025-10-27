@@ -7,7 +7,7 @@ export default function Resume() {
   return (
     <section id="resume" className="py-12">
       <motion.h2
-        className="text-3xl font-bold glow-underline text-center"
+        className="text-3xl font-bold text-center bg-gradient-to-r from-purple-700 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(168,85,247,0.8)]"
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -24,7 +24,11 @@ export default function Resume() {
         {/* Open Resume */}
         <button
           onClick={() => window.open(resumePath, "_blank")}
-          className="px-5 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 transition-colors duration-200"
+          className="px-6 py-2.5 rounded-lg font-semibold text-white 
+          bg-gradient-to-r from-purple-700 to-violet-600
+          hover:from-fuchsia-500 hover:to-violet-500
+          shadow-[0_0_10px_rgba(168,85,247,0.8)] hover:shadow-[0_0_20px_rgba(217,70,239,0.9)]
+          transition-all duration-300"
         >
           Open Resume
         </button>
@@ -33,7 +37,11 @@ export default function Resume() {
         <a
           href={resumePath}
           download="Dhruv_Singh_Resume.html"
-          className="px-5 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600 transition-colors duration-200"
+          className="px-6 py-2.5 rounded-lg font-semibold text-white 
+          bg-gradient-to-r from-violet-600 to-fuchsia-600
+          hover:from-purple-700 hover:to-fuchsia-500
+          shadow-[0_0_10px_rgba(168,85,247,0.8)] hover:shadow-[0_0_20px_rgba(236,72,153,0.9)]
+          transition-all duration-300"
         >
           Download Resume
         </a>

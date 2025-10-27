@@ -1,5 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import { FiExternalLink } from 'react-icons/fi'
 
 const projects = [
   { 
@@ -16,13 +17,7 @@ const projects = [
     tools: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn'],
     link: null
   },
-  { 
-    title: 'Mini Data Analyst – Automated Data Manipulation & Analysis', 
-    desc: 'Automatically cleans, manipulates, and analyzes datasets, generating instant insights and visual reports.', 
-    tech: ['Python','Pandas','NumPy','Matplotlib','Seaborn'],
-    tools: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'Streamlit/Flask', 'MS Excel', 'VS Code', 'Jupyter Notebook'],
-    link: 'https://mini-data-analyst-1.onrender.com'
-  },
+
   { 
     title: 'Zomato Data Analysis & Visualization', 
     desc: 'Analyzed Zomato restaurant dataset to understand user preferences, trends, and visualized cuisine & ratings.', 
@@ -30,44 +25,68 @@ const projects = [
     tools: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'MS Excel', 'VS Code', 'Jupyter Notebook'],
     link: null
   },
+    { 
+    title: 'Mini Data Analyst – Automated Data Manipulation & Analysis', 
+    desc: 'Automatically cleans, manipulates, and analyzes datasets, generating instant insights and visual reports.', 
+    tech: ['Python','Pandas','NumPy','Matplotlib','Seaborn'],
+    tools: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'Streamlit/Flask', 'MS Excel', 'VS Code', 'Jupyter Notebook'],
+    link: 'https://mini-data-analyst-1.onrender.com'
+  },
 ]
 
 export default function Projects(){
   return (
     <section id='projects' className='py-12'>
+      {/* Heading */}
       <motion.h2 
-        className='text-3xl font-bold glow-underline' 
-        initial={{opacity:0,y:10}} 
-        whileInView={{opacity:1,y:0}} 
+        className='text-4xl font-bold text-center mb-10 bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text drop-shadow-lg'
+        initial={{opacity:0, y:10}} 
+        whileInView={{opacity:1, y:0}} 
         viewport={{once:true}}
       >
         Projects
       </motion.h2>
-      <div className='mt-6 grid md:grid-cols-2 gap-6'>
+
+      {/* Project Cards */}
+      <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8 px-6'>
         {projects.map((p,i)=>(
           <motion.article 
             key={i} 
-            className='p-5 rounded-2xl bg-gradient-to-br from-gray-800/50 to-black/30 border border-white/5'
-            initial={{opacity:0, y:10}} 
-            whileInView={{opacity:1,y:0}} 
+            className='p-6 rounded-2xl bg-gradient-to-br from-gray-800/60 to-black/40 border border-gray-700/50 shadow-[0_0_10px_rgba(255,0,255,0.15)] hover:shadow-[0_0_20px_rgba(255,0,255,0.4)] transition-all duration-300 backdrop-blur-md'
+            initial={{opacity:0, y:20}} 
+            whileInView={{opacity:1, y:0}} 
+            transition={{delay:i*0.1, duration:0.4}} 
             viewport={{once:true}}
           >
-            <div className='font-bold text-gray-100'>{p.title}</div>
-            <div className='text-sm text-gray-300 mt-2'>{p.desc}</div>
-            <div className='text-xs opacity-80 mt-3'>
-              <b>Tech:</b> {p.tech.join(' • ')}
+            {/* Title */}
+            <div className='font-semibold text-lg bg-gradient-to-r from-purple-300 to-pink-400 bg-clip-text text-transparent drop-shadow-[0_0_5px_rgba(255,0,255,0.3)]'>
+              {p.title}
             </div>
-            <div className='text-xs opacity-80 mt-1'>
-              <b>Tools:</b> {p.tools.join(' • ')}
+
+            {/* Description */}
+            <div className='text-sm text-gray-400 mt-2 leading-relaxed'>
+              {p.desc}
             </div>
+
+            {/* Tech Stack */}
+            <div className='text-xs text-gray-500 mt-3'>
+              <b className='text-gray-300'>Tech:</b> {p.tech.join(' • ')}
+            </div>
+
+            {/* Tools */}
+            <div className='text-xs text-gray-500 mt-1'>
+              <b className='text-gray-300'>Tools:</b> {p.tools.join(' • ')}
+            </div>
+
+            {/* Live Project Link */}
             {p.link && (
               <a 
                 href={p.link} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-blue-400 text-sm mt-2 inline-block hover:underline"
+                className="text-pink-400 text-sm mt-3 inline-flex items-center gap-1 hover:text-pink-300 transition-all"
               >
-                Live Project
+                <FiExternalLink className='inline-block' /> Live Project
               </a>
             )}
           </motion.article>
