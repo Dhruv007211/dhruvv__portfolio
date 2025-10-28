@@ -1,8 +1,39 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FaGithub, FaLinkedin, FaInstagram, FaPhone, FaEnvelope } from 'react-icons/fa'
 
 export default function Hero() {
+  const roles = [
+    'Data Scientist',
+    'Machine Learning Enthusiast',
+    'Problem Solver',
+    'Data Analyst',
+  ]
+  const [currentRole, setCurrentRole] = useState('')
+  const [index, setIndex] = useState(0)
+  const [charIndex, setCharIndex] = useState(0)
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  // Typing animation effect
+  useEffect(() => {
+    const currentText = roles[index % roles.length]
+    let typingSpeed = isDeleting ? 60 : 100
+
+    const timeout = setTimeout(() => {
+      setCharIndex((prev) => prev + (isDeleting ? -1 : 1))
+
+      if (!isDeleting && charIndex === currentText.length) {
+        setTimeout(() => setIsDeleting(true), 1000)
+      } else if (isDeleting && charIndex === 0) {
+        setIsDeleting(false)
+        setIndex((prev) => (prev + 1) % roles.length)
+      }
+    }, typingSpeed)
+
+    setCurrentRole(currentText.substring(0, charIndex))
+    return () => clearTimeout(timeout)
+  }, [charIndex, isDeleting, index])
+
   return (
     <section className='min-h-screen flex flex-col items-center justify-center text-center px-4 relative overflow-hidden'>
 
@@ -56,12 +87,23 @@ export default function Hero() {
         </span>
       </motion.h1>
 
-      {/* Short intro */}
-      <motion.p
-        className='mt-3 text-gray-300 max-w-xl leading-relaxed drop-shadow-[0_0_6px_rgba(37,99,235,0.4)]'
+      {/* Typing Role Animation */}
+      <motion.h2
+        className='text-xl md:text-2xl font-medium mt-3 text-blue-300 h-6'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4 }}
+      >
+        {currentRole}
+        <span className='border-r-2 border-blue-400 animate-pulse ml-1'></span>
+      </motion.h2>
+
+      {/* Short intro */}
+      <motion.p
+        className='mt-5 text-gray-300 max-w-xl leading-relaxed drop-shadow-[0_0_6px_rgba(37,99,235,0.4)]'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
       >
         Aspiring <span className='text-blue-300 font-semibold'>Data Scientist</span> passionate about
         Data Analysis, Visualization, and Problem Solving.  
@@ -74,7 +116,7 @@ export default function Hero() {
         className='flex gap-6 mt-8 text-2xl flex-wrap justify-center'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
+        transition={{ delay: 0.8 }}
       >
         {[
           { icon: <FaGithub />, link: 'https://github.com/Dhruv007211' },

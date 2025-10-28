@@ -4,73 +4,147 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Resume - Dhruv Singh</title>
+
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: #d9d9d9; /* soft paper gray background */
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    padding: 10px;
+    padding: 25px;
   }
 
   .resume-container {
-    width: 210mm; /* A4 width */
-    max-height: 287mm; /* slightly less than A4 height to avoid extra page */
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    width: 210mm;
+    max-height: 287mm;
+    background: #f7f7f7; /* off-white paper tone */
+    color: #222;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.25);
     border-radius: 10px;
-    overflow: hidden;
+    padding: 35px 40px;
     position: relative;
+    border: 1px solid #ccc;
   }
 
   #download-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 8px 12px;
-    background: #0077b5;
-    color: white;
+    top: 12px;
+    right: 12px;
+    padding: 7px 12px;
+    background: #222;
+    color: #f7f7f7;
     border: none;
-    border-radius: 6px;
+    border-radius: 5px;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 13px;
   }
-  #download-btn:hover { background: #005a86; }
+  #download-btn:hover { background: #000; }
 
   .resume-header {
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
   }
-  .resume-header h1 { font-size: 26px; margin-bottom: 3px; }
-  .resume-header p { font-weight: bold; }
 
-  .contact a { color: #0077b5; text-decoration: none; font-weight: bold; margin: 0 3px; }
-  .contact a:hover { text-decoration: underline; }
+  .resume-header h1 {
+    font-size: 26px;
+    color: #111;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
 
-  h2 { font-size: 18px; margin-top: 18px; border-bottom: 2px solid #ddd; padding-bottom: 4px; font-weight: bold; }
-  h3 { font-size: 15px; color: #0077b5; margin-top: 10px; font-weight: bold; }
-  p, li { font-size: 13px; color: #444; line-height: 1.4; }
-  ul { padding-left: 20px; margin: 4px 0 10px; }
-  li { margin-bottom: 4px; }
+  .resume-header p {
+    font-size: 14px;
+    color: #444;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  .contact {
+    margin-top: 6px;
+    text-align: center;
+    font-size: 13px;
+  }
+
+  .contact a {
+    color: #111;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .contact a:hover {
+    text-decoration: underline;
+  }
+
+  /* Section Titles */
+  h2 {
+    font-size: 16px;
+    color: #111;
+    font-weight: 700;
+    margin-top: 25px;
+    border-bottom: 1.8px solid #aaa;
+    padding-bottom: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  h3 {
+    font-size: 14px;
+    color: #111;
+    margin-top: 10px;
+    font-weight: 600;
+  }
+
+  p, li {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.45;
+  }
+
+  ul {
+    margin-top: 4px;
+    margin-bottom: 8px;
+    padding-left: 20px;
+  }
+
+  li {
+    margin-bottom: 3px;
+  }
+
+  /* Subtle Paper Shadow Effect for Print Feel */
+  .resume-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+  }
 
   @media screen and (max-width: 768px) {
-    .resume-container { width: 95%; max-height: none; padding: 15px; border-radius: 8px; }
+    .resume-container { width: 95%; padding: 25px; }
     h1 { font-size: 22px; }
-    h2 { font-size: 16px; }
-    h3, li, p { font-size: 13px; }
+    h2 { font-size: 15px; }
+    h3, li, p { font-size: 12px; }
   }
 
   @media print {
     #download-btn { display: none; }
-    body { background: none; display: block; padding: 0; }
-    .resume-container { box-shadow: none; border-radius: 0; width: 100%; max-height: none; }
+    body { background: none; padding: 0; }
+    .resume-container {
+      box-shadow: none;
+      border-radius: 0;
+      background: #fff;
+    }
   }
 </style>
 </head>
+
 <body>
   <div class="resume-container" id="resume-content">
     <button id="download-btn">Download PDF</button>
@@ -78,64 +152,56 @@
     <div class="resume-header">
       <h1>Dhruv Kumar Singh</h1>
       <p>Data Analyst & Data Science Enthusiast</p>
-      
-      <!-- Contact Section -->
-      <div class="contact" style="margin-top:5px;">
-        📧 <a href="mailto:dhruv25072006@gmail.com">dhruv25072006@gmail.com</a> | 
+
+      <div class="contact">
+        📧 <a href="mailto:dhruv25072006@gmail.com">dhruv25072006@gmail.com</a> |
         📱 9021889562
       </div>
-      <div class="contact" style="margin-top:3px;">
-        🌐 <a href="https://github.com/Dhruv007211" target="_blank">GitHub</a> | 
+      <div class="contact">
+        🌐 <a href="https://github.com/Dhruv007211" target="_blank">GitHub</a> |
         💼 <a href="https://www.linkedin.com/in/dhruv-singh-88969a333" target="_blank">LinkedIn</a>
       </div>
     </div>
 
     <h2>Projects</h2>
-
     <h3>Apple Inc. 10-Year Sales Trend Analysis</h3>
     <ul>
-      <li>Analyzed 10 years of Apple’s sales data to find key market trends.</li>
-      <li>Used Pandas, NumPy, Matplotlib, and Seaborn for visualization.</li>
-      <li>Built clear dashboards showing regional and yearly performance.</li>
-      <li>Provided insights into consumer behavior and product variations.</li>
+      <li>Analyzed Apple’s decade-long sales data to identify growth patterns.</li>
+      <li>Utilized Pandas, NumPy, Matplotlib, and Seaborn for data insights.</li>
+      <li>Created visual dashboards showing performance metrics.</li>
     </ul>
 
-    <h3>Retail Sales Data Cleaning and Visualization</h3>
+    <h3>Retail Sales Data Cleaning & Visualization</h3>
     <ul>
-      <li>Cleaned raw datasets using Python (NumPy, Pandas).</li>
-      <li>Visualized purchase trends and customer behavior patterns.</li>
-      <li>Designed interactive charts with Matplotlib & Seaborn.</li>
+      <li>Processed and cleaned retail datasets using Python (NumPy, Pandas).</li>
+      <li>Visualized customer behavior patterns with Matplotlib & Seaborn.</li>
     </ul>
 
-    <h3>Mini Data Analyst – Automated Data Manipulation & Analysis</h3>
-<ul>
-  <li>Developed a mini tool using <b>Streamlit</b> that automatically cleans, manipulates, and analyzes datasets.</li>
-  <li>Generates instant insights and visual reports with minimal user input.</li>
-  <li>Helps automate repetitive data preprocessing tasks.</li>
-  <li>🔗 <a href="https://mini-data-analyst-1.onrender.com" target="_blank">Live Project</a></li>
-</ul>
-
+    <h3>Mini Data Analyst – Automated Analysis Tool</h3>
+    <ul>
+      <li>Developed a <b>Streamlit</b>-based tool for automatic data cleaning & visualization.</li>
+      <li>Generates reports and analytics with minimal user input.</li>
+      <li>🔗 <a href="https://mini-data-analyst-1.onrender.com" target="_blank">Live Project</a></li>
+    </ul>
 
     <h3>Zomato Data Analysis & Visualization</h3>
     <ul>
-      <li>Analyzed Zomato restaurant dataset to understand user preferences and trends.</li>
-      <li>Cleaned messy data and handled missing values using Pandas.</li>
-      <li>Visualized cuisine trends, ratings distribution, and cost patterns.</li>
+      <li>Explored restaurant trends, cuisine preferences, and cost distributions.</li>
+      <li>Used Pandas for preprocessing and Seaborn for visualization.</li>
     </ul>
 
     <h2>Technical Skills</h2>
     <ul>
-      <li><b>Programming Languages:</b> Python, Java, C</li>
-      <li><b>Core Computer Science:</b> DSA, OOP, Problem Solving</li>
-      <li><b>Libraries & Frameworks (Python):</b> NumPy, Pandas, Matplotlib, Seaborn</li>
-      <li><b>Data Handling & Analysis:</b> Data Manipulation, Data Visualization, Data Analysis</li>
-      <li><b>Tools:</b> MS Excel, VS Code, Jupyter Notebook</li>
+      <li><b>Languages:</b> Python, Java, C</li>
+      <li><b>Core CS:</b> DSA, OOP, Problem Solving</li>
+      <li><b>Libraries:</b> NumPy, Pandas, Matplotlib, Seaborn</li>
+      <li><b>Tools:</b> MS Excel, VS Code, Jupyter Notebook</li>
     </ul>
 
     <h2>Achievements</h2>
     <ul>
-      <li>Solved 50+ problems on <a href="https://leetcode.com/Dhruvionx/">LeetCode</a></li>
-      <li>Solved 20+ problems on <a href="https://www.geeksforgeeks.org/user/dhruv252o9e/">GeeksforGeeks</a></li>
+      <li>80+ problems solved on <a href="https://leetcode.com/Dhruvionx/">LeetCode</a>.</li>
+      <li>30+ problems solved on <a href="https://www.geeksforgeeks.org/user/dhruv252o9e/">GeeksforGeeks</a>.</li>
     </ul>
 
     <h2>Participation</h2>
@@ -148,11 +214,12 @@
       <li>
         <b>Anand International College of Engineering</b> (2024–2028)<br>
         B.Tech – Computer Science Engineering
-        <span style="float:right; font-size:11px; color:#666;">Kanota, Jaipur</span>
+        <span style="float:right; font-size:11px; color:#555;">Kanota, Jaipur</span>
       </li>
       <li>
-        <b>Vidhya Sagar Academy</b>(2023)<br></b>Class XII, 94%
-        <span style="float:right; font-size:11px; color:#666;">Bassi, Jaipur</span>
+        <b>Vidhya Sagar Academy</b> (2023)<br>
+        Class XII – 94%
+        <span style="float:right; font-size:11px; color:#555;">Bassi, Jaipur</span>
       </li>
     </ul>
   </div>
