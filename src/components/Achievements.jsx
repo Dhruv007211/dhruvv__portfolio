@@ -1,31 +1,83 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import React, { useState, useEffect } from 'react'
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 import { SiLeetcode, SiGeeksforgeeks } from 'react-icons/si'
 
-const achievements = [
-  { 
-    title: 'DSA Proficiency (Java)', 
-    detail: 'Strong problem solving & OOP, solved 90+ problems on LeetCode & 30+ problems on GeeksforGeeks',
-    links: [
-      { icon: <SiLeetcode className='text-yellow-400 hover:text-yellow-300 text-2xl transition-all duration-300 hover:scale-110' />, url: 'https://leetcode.com/Dhruvionx/' },
-      { icon: <SiGeeksforgeeks className='text-green-400 hover:text-green-300 text-2xl transition-all duration-300 hover:scale-110' />, url: 'https://www.geeksforgeeks.org/user/dhruv252o9e/' }
-    ]
-  },
-  { 
-    title: 'Multiple DS Projects', 
-    detail: 'Handled and preprocessed datasets: cleaned, transformed, and managed data effectively'  
-  },
-  { 
-    title: 'Data Visualization', 
-    detail: 'Built interactive dashboards & visual reports using Python and Power BI' 
-  },
-  { 
-    title: 'Competition Participation', 
-    detail: 'Participated in Anand ICE Ideathon and showcased innovative tech ideas' 
-  },
-]
+// Counter Component for Smooth Count-up Animation
+const Counter = ({ value }) => {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (latest) => Math.round(latest));
 
-export default function Achievements(){
+  useEffect(() => {
+    const controls = animate(count, value, { duration: 2, ease: "easeOut" });
+    return controls.stop;
+  }, [value, count]);
+
+  return <motion.span>{rounded}</motion.span>;
+};
+
+export default function Achievements() {
+  // Yahan humne default values tumhare naye milestone (200+ aur 70+) par set kar di hain
+  // Isse agar API kabhi slow bhi chale, toh bhi tumhara real achievement hi dikhega
+  const [leetcodeCount, setLeetcodeCount] = useState(200); 
+  const [gfgCount, setGfgCount] = useState(70);
+
+  useEffect(() => {
+    const fetchLiveStats = async () => {
+      try {
+        // 1. LeetCode API Fetch (Username changed to small 'dhruvionx')
+        const lcResponse = await fetch('https://leetcode-api-faisalshabbir.vercel.app/dhruvionx/');
+        if (lcResponse.ok) {
+          const lcData = await lcResponse.json();
+          // Agar data mil gaya toh live count set ho jayega
+          if (lcData && lcData.totalSolved) {
+            setLeetcodeCount(lcData.totalSolved);
+          }
+        }
+
+        // 2. GeeksforGeeks API Fetch
+        // GFG ka HTML structure change hota rehta h, isliye safe-side fetch ko try-catch mein rakha h
+        const gfgResponse = await fetch('https://geeks-for-geeks-api.vercel.app/user/dhruv252o9e/');
+        if (gfgResponse.ok) {
+          const gfgData = await gfgResponse.json();
+          if (gfgData && gfgData.totalSolved) {
+            setGfgCount(gfgData.totalSolved);
+          }
+        }
+      } catch (error) {
+        console.error("Live stats fetch karne mein dikkat aayi, using current updates:", error);
+      }
+    };
+
+    fetchLiveStats();
+  }, []);
+
+  const achievements = [
+    { 
+      title: 'DSA Proficiency (Java)', 
+      detail: (
+        <span>
+          Strong problem solving & OOP, solved <span className="text-yellow-400 font-bold"><Counter value={leetcodeCount} />+</span> problems on LeetCode & <span className="text-green-400 font-bold"><Counter value={gfgCount} />+</span> problems on GeeksforGeeks
+        </span>
+      ),
+      links: [
+        { icon: <SiLeetcode className='text-yellow-400 hover:text-yellow-300 text-2xl transition-all duration-300 hover:scale-110' />, url: 'https://leetcode.com/dhruvionx/' },
+        { icon: <SiGeeksforgeeks className='text-green-400 hover:text-green-300 text-2xl transition-all duration-300 hover:scale-110' />, url: 'https://www.geeksforgeeks.org/user/dhruv252o9e/' }
+      ]
+    },
+    { 
+      title: 'Multiple DS Projects', 
+      detail: 'Handled and preprocessed datasets: cleaned, transformed, and managed data effectively'  
+    },
+    { 
+      title: 'Data Visualization', 
+      detail: 'Built interactive dashboards & visual reports using Python and Tableau to communicate insights effectively' 
+    },
+    { 
+      title: 'Competition Participation', 
+      detail: 'Participated in Anand ICE Ideathon and showcased innovative tech ideas' 
+    },
+  ];
+
   return (
     <section id='achievements' className='py-12'>
       <motion.h2 
@@ -46,17 +98,14 @@ export default function Achievements(){
             whileInView={{scale:1, opacity:1}} 
             viewport={{once:true}}
           >
-            {/* Heading */}
             <div className='font-semibold text-lg bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_5px_rgba(0,255,255,0.3)]'>
               {a.title}
             </div>
 
-            {/* Description */}
             <div className='text-sm text-gray-400 mt-2 leading-relaxed'>
               {a.detail}
             </div>
 
-            {/* Social icons under DSA section */}
             {a.links && (
               <div className='flex items-center gap-4 mt-4'>
                 {a.links.map((link, idx) => (

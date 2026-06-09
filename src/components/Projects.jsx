@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { FiExternalLink } from 'react-icons/fi'
+import { FaTerminal } from 'react-icons/fa'
 
 const projects = [
   { 
@@ -17,7 +18,6 @@ const projects = [
     tools: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn'],
     link: null
   },
-
   { 
     title: 'Zomato Data Analysis & Visualization', 
     desc: 'Analyzed Zomato restaurant dataset to understand user preferences, trends, and visualized cuisine & ratings.', 
@@ -25,69 +25,101 @@ const projects = [
     tools: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'MS Excel', 'VS Code', 'Jupyter Notebook'],
     link: null
   },
-    { 
+  { 
     title: 'Mini Data Analyst – Automated Data Manipulation & Analysis', 
     desc: 'Automatically cleans, manipulates, and analyzes datasets, generating instant insights and visual reports.', 
     tech: ['Python','Pandas','NumPy','Matplotlib','Seaborn'],
-    tools: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'Streamlit/Flask', 'MS Excel', 'VS Code', 'Jupyter Notebook'],
+    tools: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'Streamlit', 'Flask', 'MS Excel', 'VS Code', 'Jupyter Notebook'],
     link: 'https://mini-data-analyst-1.onrender.com'
   },
 ]
 
 export default function Projects(){
   return (
-    <section id='projects' className='py-12'>
-      {/* Heading */}
-      <motion.h2 
-        className='text-4xl font-bold text-center mb-10 bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text drop-shadow-lg'
-        initial={{opacity:0, y:10}} 
-        whileInView={{opacity:1, y:0}} 
-        viewport={{once:true}}
-      >
-        Projects
-      </motion.h2>
+    <section id='projects' className='py-24 bg-transparent relative overflow-hidden'>
+      
+      {/* ================= MAIN HEADING (PURPLE TO BLUE-PINK GLOW) ================= */}
+      <div className='text-center mb-16 relative z-10'>
+        <span className='text-xs font-bold tracking-[0.4em] text-purple-400 uppercase block mb-3 drop-shadow-[0_0_8px_rgba(168,85,247,0.4)]'>
+          Deployment Log
+        </span>
+        <motion.h2 
+          className='text-4xl md:text-6xl font-black bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-400 text-transparent bg-clip-text tracking-tight uppercase drop-shadow-[0_0_20px_rgba(168,85,247,0.25)]'
+          initial={{ opacity: 0, scale: 0.98 }} 
+          whileInView={{ opacity: 1, scale: 1 }} 
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          Featured Operations
+        </motion.h2>
+      </div>
 
-      {/* Project Cards */}
-      <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8 px-6'>
-        {projects.map((p,i)=>(
+      {/* ================= PROJECT CARDS MATRIX (PURPLE & BLUE & YELLOW AURA) ================= */}
+      <div className='grid md:grid-cols-2 lg:grid-cols-2 gap-8 px-6 max-w-6xl mx-auto relative z-10'>
+        {projects.map((p, i) => (
           <motion.article 
             key={i} 
-            className='p-6 rounded-2xl bg-gradient-to-br from-gray-800/60 to-black/40 border border-gray-700/50 shadow-[0_0_10px_rgba(255,0,255,0.15)] hover:shadow-[0_0_20px_rgba(255,0,255,0.4)] transition-all duration-300 backdrop-blur-md'
-            initial={{opacity:0, y:20}} 
-            whileInView={{opacity:1, y:0}} 
-            transition={{delay:i*0.1, duration:0.4}} 
-            viewport={{once:true}}
+            className='p-8 rounded-3xl bg-gradient-to-br from-gray-900/40 via-zinc-950/60 to-black/40 border border-purple-500/10 shadow-[0_0_15px_rgba(168,85,247,0.05)] relative overflow-hidden group/project'
+            initial={{ opacity: 0, y: 30 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true }}
+            whileHover={{ 
+              scale: 1.01, 
+              borderColor: "rgba(168,85,247,0.4)", 
+              boxShadow: "0_0_30px_rgba(59,130,246,0.15), 0_0_50px_rgba(168,85,247,0.1)" 
+            }}
+            transition={{ type: "spring", stiffness: 100, damping: 18, delay: i * 0.05 }} 
           >
-            {/* Title */}
-            <div className='font-semibold text-lg bg-gradient-to-r from-purple-300 to-pink-400 bg-clip-text text-transparent drop-shadow-[0_0_5px_rgba(255,0,255,0.3)]'>
-              {p.title}
+            {/* Ambient Inner Tech Mask */}
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/[0.02] via-transparent to-blue-500/[0.02] pointer-events-none" />
+
+            {/* Title Block */}
+            <div className='flex items-start justify-between gap-4 mb-3'>
+              <div className='font-black text-xl bg-gradient-to-r from-purple-300 via-pink-400 to-yellow-200 bg-clip-text text-transparent tracking-wide uppercase group-hover/project:from-purple-400 group-hover/project:to-yellow-400 transition-all duration-300'>
+                {p.title}
+              </div>
+              <FaTerminal className="text-purple-500/40 group-hover/project:text-yellow-400/70 transition-colors duration-300 mt-1 flex-shrink-0" />
             </div>
 
-            {/* Description */}
-            <div className='text-sm text-gray-400 mt-2 leading-relaxed'>
+            {/* Description Subtext */}
+            <p className='text-sm text-zinc-400 font-medium leading-relaxed mb-6 group-hover/project:text-zinc-200 transition-colors duration-300'>
               {p.desc}
+            </p>
+
+            <div className='space-y-4 border-t border-purple-950/30 pt-4 group-hover/project:border-purple-500/20 transition-colors duration-500'>
+              {/* Tech Stack Badges (Blue/Purple hints) */}
+              <div className='flex flex-wrap items-center gap-2'>
+                <span className='text-xs font-black text-purple-400/60 uppercase tracking-wider mr-1'>Tech:</span>
+                {p.tech.map((t, idx) => (
+                  <span key={idx} className='text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-md bg-purple-950/10 border border-purple-500/10 text-purple-300 cursor-default hover:text-white hover:border-blue-500/40 transition-all'>
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              {/* Tools Badges (Yellow/Zinc contrast) */}
+              <div className='flex flex-wrap items-center gap-2'>
+                <span className='text-xs font-black text-yellow-500/60 uppercase tracking-wider mr-1'>Tools:</span>
+                {p.tools.map((tool, idx) => (
+                  <span key={idx} className='text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-md bg-zinc-900/40 border border-zinc-800 text-zinc-400 cursor-default hover:text-yellow-200 hover:border-yellow-500/30 transition-all'>
+                    {tool}
+                  </span>
+                ))}
+              </div>
             </div>
 
-            {/* Tech Stack */}
-            <div className='text-xs text-gray-500 mt-3'>
-              <b className='text-gray-300'>Tech:</b> {p.tech.join(' • ')}
-            </div>
-
-            {/* Tools */}
-            <div className='text-xs text-gray-500 mt-1'>
-              <b className='text-gray-300'>Tools:</b> {p.tools.join(' • ')}
-            </div>
-
-            {/* Live Project Link */}
+            {/* Live Project Action Link (Glowing Yellow/Pink Blast) */}
             {p.link && (
-              <a 
-                href={p.link} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-pink-400 text-sm mt-3 inline-flex items-center gap-1 hover:text-pink-300 transition-all"
-              >
-                <FiExternalLink className='inline-block' /> Live Project
-              </a>
+              <div className="mt-6 pt-2">
+                <a 
+                  href={p.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="inline-flex items-center gap-2 text-xs font-black tracking-widest uppercase px-4 py-2 rounded-xl bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/30 text-pink-400 drop-shadow-[0_0_12px_rgba(236,72,153,0.2)] hover:from-purple-600 hover:to-yellow-500 hover:text-black hover:border-transparent transition-all duration-300"
+                >
+                  <FiExternalLink className='text-sm stroke-[2.5]' /> Live Deployment
+                </a>
+              </div>
             )}
           </motion.article>
         ))}

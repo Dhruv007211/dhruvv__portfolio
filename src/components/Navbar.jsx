@@ -29,7 +29,7 @@ export default function Navbar({ dark, setDark }) {
                 : "bg-gradient-to-br from-yellow-400 to-pink-500 text-white"
             }`}
           >
-            NN
+           DS
           </div>
           <div>
             <div
