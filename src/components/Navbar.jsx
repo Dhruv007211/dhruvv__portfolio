@@ -109,7 +109,7 @@ export default function Navbar({ dark, setDark }) {
               Dhruv Singh
             </div>
             <div className={`text-xs ${dark ? "text-gray-400" : "text-gray-600"}`}>
-              Data Science • AI • Cyber Systems
+              Data Science • AI • ML
             </div>
           </div>
         </div>
