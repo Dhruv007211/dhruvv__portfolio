@@ -163,6 +163,7 @@ function UnifiedSpiderMap() {
 
 export default function Skills() {
   return (
+    // 🔴 यहाँ पर id="skills" को सही तरीके से जोड़ दिया गया है
     <section id="skills" className="py-24 bg-transparent min-h-screen text-white flex flex-col justify-center relative overflow-hidden">
       
       {/* ================= HEADER SECTION (GLOW GRADIENT) ================= */}

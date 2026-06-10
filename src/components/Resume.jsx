@@ -38,16 +38,14 @@ export default function Resume() {
   };
 
   return (
+    // 🔴 यहाँ id="resume" पहले से ही मौजूद है, जो जार्विस वॉयस इंजन के साथ स्क्रॉल करने के लिए परफेक्ट है
     <section id="resume" className="relative py-28 overflow-hidden bg-slate-950">
       
       {/* ─── NEW & IMPROVED SMOOTH PREMIUM GLOW BLOBS ─── */}
-      {/* Left-Center Glow: Ekdum soft aur smooth edges ke liye blur ki value 150px ki hai */}
       <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-purple-600/15 rounded-full blur-[150px] pointer-events-none z-0 mix-blend-screen" />
       
-      {/* Right-Center Glow */}
       <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[450px] h-[450px] bg-fuchsia-600/15 rounded-full blur-[150px] pointer-events-none z-0 mix-blend-screen" />
 
-      {/* Center Ultra Glow (Heading ke exact peeche) */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none z-0" />
 
       {/* ─── BACKGROUND NEON CURVES (SMOOTH & ULTRA GLOW) ─── */}
@@ -59,7 +57,6 @@ export default function Resume() {
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="none"
         >
-          {/* Neon Gradient Definition */}
           <defs>
             <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#6366f1" stopOpacity="0" />
@@ -68,7 +65,6 @@ export default function Resume() {
               <stop offset="100%" stopColor="#6366f1" stopOpacity="0" />
             </linearGradient>
             
-            {/* Super Smooth Glow Filter (stdDeviation ko 12 se badhakar 24 kiya hai smooth curves ke liye) */}
             <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
               <feGaussianBlur stdDeviation="24" result="blur1" />
               <feGaussianBlur stdDeviation="12" result="blur2" />
@@ -80,7 +76,6 @@ export default function Resume() {
             </filter>
           </defs>
 
-          {/* Curve Line 1 (Main Super Glow) */}
           <path
             d="M-100,150 C300,400 600,0 1100,250 C1300,350 1500,200 1600,150"
             stroke="url(#neonGradient)"
@@ -90,7 +85,6 @@ export default function Resume() {
             strokeLinecap="round"
           />
 
-          {/* Curve Line 2 (Subtle Offset Line for depth) */}
           <path
             d="M-50,200 C350,450 550,50 1050,300 C1250,400 1450,250 1550,200"
             stroke="url(#neonGradient)"

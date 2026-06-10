@@ -61,6 +61,7 @@ export default function About() {
   ];
 
   return (
+    // 🔴 यहाँ id='about' पहले से मौजूद है, जो जार्विस वॉयस इंजन के स्क्रॉल कमांड को परफेक्टली सिंक रखेगा
     <section id='about' className='py-24 relative overflow-hidden bg-slate-950 px-4 md:px-8'>
       
       {/* ─── ULTRA GLOW AMBIENT BACKDROP ─── */}

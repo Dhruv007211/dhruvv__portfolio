@@ -36,6 +36,7 @@ const projects = [
 
 export default function Projects(){
   return (
+    // 🔴 यहाँ id='projects' पहले से मौजूद है, जो जार्विस वॉयस कमांड के स्क्रॉल को सीधा यहाँ लाएगा
     <section id='projects' className='py-24 bg-transparent relative overflow-hidden'>
       
       {/* ================= MAIN HEADING (PURPLE TO BLUE-PINK GLOW) ================= */}

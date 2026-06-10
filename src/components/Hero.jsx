@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { FaGithub, FaLinkedin, FaInstagram, FaPhone, FaEnvelope } from 'react-icons/fa'
 
-// 🧠 Smooth-Pulsing Cinematic Neuron Engine with Multi-Directional Code Floating
-const ImmersiveAvatarEngine = () => {
+// 🔥 1. CYBERNETIC JARVIS ANIMATION CORE (UPDATED COLORS & DYNAMICS)
+const JarvisCoreEngine = ({ isListening, systemStatus }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -12,225 +12,146 @@ const ImmersiveAvatarEngine = () => {
     const ctx = canvas.getContext('2d');
     let animationFrameId;
 
-    let width = (canvas.width = 550);
+    let width = (canvas.width = 500);
     let height = (canvas.height = 320);
+    let angle = 0;
+    let particlePulse = 0;
 
-    // 1. बैकग्राउंड न्यूरॉन नेटवर्क
-    const synapses = [];
-    for (let i = 0; i < 32; i++) {
-      synapses.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        radius: Math.random() * 1.2 + 1
+    const particles = [];
+    for (let i = 0; i < 60; i++) {
+      particles.push({
+        radius: Math.random() * 80 + 20,
+        speed: (Math.random() * 0.02 + 0.005) * (Math.random() > 0.5 ? 1 : -1),
+        size: Math.random() * 1.5 + 0.5,
+        angle: Math.random() * Math.PI * 2,
+        // Default colors initialized, updated dynamically on draw
+        color: i % 2 === 0 ? '#06b6d4' : '#ef4444'
       });
     }
-
-    // 2. कोडिंग सिम्बल्स - अब ये हर दिशा में तैरेंगे (Omnidirectional)
-    const codeSymbols = ['{...data}', '</>','==','!=','Error','404', '=>', 'import', '[ ]', '0110', 'f(x)', 'connect()', 'const', 'deploy'];
-    const floatingCodes = [];
-    for (let i = 0; i < 12; i++) {
-      // अलग-अलग एंगल्स पर तैरने के लिए वेलोसिटी (vx, vy)
-      const angle = Math.random() * Math.PI * 2;
-      const speed = Math.random() * 0.2 + 0.15; // स्पीड को एकदम धीमा और स्मूथ रखा है
-      floatingCodes.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        text: codeSymbols[Math.floor(Math.random() * codeSymbols.length)],
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed,
-        opacity: Math.random() * 0.4 + 0.2,
-        size: Math.floor(Math.random() * 3) + 11
-      });
-    }
-
-    // 3. स्मूथ शॉकवेव रिंग्स
-    let shockwaves = [];
-    let frameCount = 0;
 
     const draw = () => {
       ctx.clearRect(0, 0, width, height);
-      frameCount++;
-
       const cx = width / 2;
       const cy = height / 2;
-
-      // --- लेयर 1: सिनैप्स बैकग्राउंड नेटवर्क ---
-      synapses.forEach((s) => {
-        s.x += s.vx; s.y += s.vy;
-        if (s.x < 0 || s.x > width) s.vx *= -1;
-        if (s.y < 0 || s.y > height) s.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(56, 189, 248, 0.2)';
-        ctx.fill();
-      });
-
-      // बैकग्राउंड कनेक्शन लाइन्स
-      for (let i = 0; i < synapses.length; i++) {
-        for (let j = i + 1; j < synapses.length; j++) {
-          let dist = Math.hypot(synapses[i].x - synapses[j].x, synapses[i].y - synapses[j].y);
-          if (dist < 85) {
-            ctx.strokeStyle = `rgba(37, 99, 235, ${(1 - dist / 85) * 0.12})`;
-            ctx.lineWidth = 0.5;
-            ctx.beginPath();
-            ctx.moveTo(synapses[i].x, synapses[i].y);
-            ctx.lineTo(synapses[j].x, synapses[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      // --- धीमा और गहरा पंपिंग मैकेनिक्स (Calm & Deep Pulse) ---
-      // टाइमिंग बढ़ा दी (90 फ्रेम्स) ताकि धड़कन झटकेदार न लगे, बल्कि सांस लेने जैसी स्मूथ लगे
-      let pumpCycle = (frameCount % 90) / 90; 
-      let beatIntensity = Math.pow(Math.sin(pumpCycle * Math.PI), 2); 
-      let coreSize = 34 + beatIntensity * 8; // बैलेंस साइज़ चेंज
-
-      // हर साइकिल में एक बहुत हल्की शॉकवेव
-      if (frameCount % 90 === 1) {
-        shockwaves.push({ radius: coreSize, maxRadius: 160, opacity: 0.5 });
-      }
-
-      // --- लेयर 2: कोडिंग सिम्बल्स का तैरना (Omnidirectional Floating) ---
-      floatingCodes.forEach((code) => {
-        code.x += code.vx;
-        code.y += code.vy;
-
-        // बाउंड्री रीसेट (स्क्रीन से बाहर जाने पर दूसरी तरफ से एंट्री)
-        if (code.x < -40) code.x = width + 40;
-        if (code.x > width + 40) code.x = -40;
-        if (code.y < -20) code.y = height + 20;
-        if (code.y > height + 20) code.y = -20;
-
-        ctx.font = `500 ${code.size}px monospace`;
-        ctx.fillStyle = `rgba(34, 211, 238, ${code.opacity + beatIntensity * 0.15})`;
-        ctx.shadowBlur = beatIntensity * 4;
-        ctx.shadowColor = '#06b6d4';
-        ctx.fillText(code.text, code.x, code.y);
-      });
-      ctx.shadowBlur = 0;
-
-      // --- लेयर 3: स्मूथ शॉकवेव रिंग्स ---
-      shockwaves.forEach((sw, idx) => {
-        sw.radius += 1.8; // फैलने की स्पीड कम की
-        sw.opacity -= 0.008; // धीरे-धीरे गायब होगी
-
-        if (sw.opacity <= 0 || sw.radius >= sw.maxRadius) {
-          shockwaves.splice(idx, 1);
-          return;
-        }
-
-        ctx.strokeStyle = `rgba(6, 182, 212, ${sw.opacity})`;
-        ctx.lineWidth = 1.2;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = '#06b6d4';
-        ctx.beginPath();
-        ctx.arc(cx, cy, sw.radius, 0, Math.PI * 2);
-        ctx.stroke();
-      });
-      ctx.shadowBlur = 0;
-
-      // --- लेयर 4: मुख्य न्यूरॉन कैरेक्टर ---
-      let floatY = Math.sin(frameCount * 0.03) * 5; // धीमा फ्लोटिंग इफ़ेक्ट
-      const coreX = cx;
-      const coreY = cy + floatY;
-
-      // 6 बायो-मैकेनिकल नसें (Dendrites)
-      const branches = [
-        { tx: coreX - 120, ty: coreY - 50, cx1: coreX - 60, cy1: coreY - 40 },
-        { tx: coreX + 120, ty: coreY - 50, cx1: coreX + 60, cy1: coreY - 40 },
-        { tx: coreX - 130, ty: coreY + 30, cx1: coreX - 70, cy1: coreY },
-        { tx: coreX + 130, ty: coreY + 30, cx1: coreX + 70, cy1: coreY },
-        { tx: coreX - 80, ty: coreY + 110, cx1: coreX - 40, cy1: coreY + 70 },
-        { tx: coreX + 80, ty: coreY + 110, cx1: coreX + 40, cy1: coreY + 70 }
-      ];
-
-      branches.forEach((b, idx) => {
-        ctx.lineWidth = 2 + beatIntensity * 1.5;
-        ctx.strokeStyle = '#2563eb';
-        ctx.shadowBlur = 8 + beatIntensity * 8;
-        ctx.shadowColor = '#06b6d4';
-
-        ctx.beginPath();
-        ctx.moveTo(coreX, coreY);
-        ctx.quadraticCurveTo(b.cx1, b.cy1, b.tx, b.ty);
-        ctx.stroke();
-
-        // नसों के सिरे
-        ctx.beginPath();
-        ctx.arc(b.tx, b.ty, 3.5 + beatIntensity * 1, 0, Math.PI * 2);
-        ctx.fillStyle = '#38bdf8';
-        ctx.fill();
-
-        // स्मूथ रनिंग सिग्नल्स (Electrical Impluses - Calm Speed)
-        let signalPos = (frameCount * 0.012 + idx * 0.16) % 1;
-        let sx = coreX + (b.tx - coreX) * signalPos;
-        let sy = coreY + (b.ty - coreY) * signalPos;
-
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = '#ffffff';
-        ctx.beginPath();
-        ctx.arc(sx, sy, 3, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-      });
-
-      // न्यूरॉन कोर बॉडी (Soma)
-      ctx.shadowBlur = 25 + beatIntensity * 20;
-      ctx.shadowColor = '#06b6d4';
       
-      // आउटर शैल
+      // Setup states based on user requirement
+      // Listening = Red & Spread | Processing (Speaking) = Blue & Shrink
+      const isSpeaking = systemStatus === 'processing';
+      
+      let speedMultiplier = 1;
+      if (isListening) speedMultiplier = 3.5;
+      if (isSpeaking) speedMultiplier = 7; // Fast spinning when speaking
+
+      angle += 0.008 * speedMultiplier;
+      particlePulse += 0.05 * speedMultiplier;
+
+      // Hexagon Ring Background Glow
+      ctx.strokeStyle = isListening && !isSpeaking ? 'rgba(239, 68, 68, 0.08)' : 'rgba(6, 182, 212, 0.06)';
+      ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.arc(coreX, coreY, coreSize, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.95)';
-      ctx.strokeStyle = '#38bdf8';
-      ctx.lineWidth = 3;
-      ctx.fill();
+      for (let i = 0; i < 6; i++) {
+        let hAngle = (Math.PI / 3) * i + angle * 0.1;
+        let x = cx + Math.cos(hAngle) * 130;
+        let y = cy + Math.sin(hAngle) * 130;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
       ctx.stroke();
 
-      // इनर न्यूक्लियस (Center Energy Source)
-      ctx.shadowBlur = 35 + beatIntensity * 15;
-      ctx.shadowColor = '#ffffff';
+      // Outer Particles Dynamics
+      particles.forEach((p) => {
+        p.angle += p.speed * speedMultiplier;
+        // Spread out more when user is talking (Listening), pull closer when Jarvis speaks
+        let pulseRadius = p.radius + Math.sin(particlePulse) * (isListening && !isSpeaking ? 12 : 4);
+        let x = cx + Math.cos(p.angle) * pulseRadius;
+        let y = cy + Math.sin(p.angle) * pulseRadius;
+        
+        ctx.fillStyle = isListening && !isSpeaking ? '#ef4444' : '#06b6d4';
+        ctx.beginPath();
+        ctx.arc(x, y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Outer Rotating Arcs Setup
+      ctx.shadowBlur = isListening && !isSpeaking ? 22 : 12;
+      ctx.shadowColor = isListening && !isSpeaking ? '#ef4444' : '#06b6d4';
+      ctx.strokeStyle = isListening && !isSpeaking ? '#ef4444' : '#06b6d4';
+      ctx.lineWidth = 1.8;
+      
+      // Dynamic arc size change: Spread vs Shrink
+      let arcRadius = isListening && !isSpeaking ? 105 : 75;
+
       ctx.beginPath();
-      ctx.arc(coreX, coreY, coreSize * 0.38, 0, Math.PI * 2);
-      ctx.fillStyle = '#ffffff';
+      ctx.arc(cx, cy, arcRadius, angle, angle + Math.PI * 0.6);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, arcRadius, angle + Math.PI, angle + Math.PI * 1.6);
+      ctx.stroke();
+
+      // Core Engine Pulse Configuration
+      // Red + Spread (45px to 55px) OR Blue + Shrink (20px to 24px)
+      let corePulse;
+      if (isListening && !isSpeaking) {
+        corePulse = 50 + Math.sin(particlePulse * 2) * 5; // Red Spread
+      } else {
+        corePulse = 22 + Math.sin(particlePulse * 2) * 2; // Blue Shrink
+      }
+
+      let gradient = ctx.createRadialGradient(cx, cy, 2, cx, cy, corePulse);
+      if (isListening && !isSpeaking) {
+        gradient.addColorStop(0, '#ffffff');
+        gradient.addColorStop(0.3, '#f87171');
+        gradient.addColorStop(1, 'rgba(239, 68, 68, 0)');
+      } else {
+        gradient.addColorStop(0, '#ffffff');
+        gradient.addColorStop(0.3, '#22d3ee');
+        gradient.addColorStop(1, 'rgba(6, 182, 212, 0)');
+      }
+
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(cx, cy, corePulse, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.shadowBlur = 0; // रीसेट
-
- 
-
+      ctx.shadowBlur = 0;
       animationFrameId = requestAnimationFrame(draw);
     };
 
     draw();
     return () => cancelAnimationFrame(animationFrameId);
-  }, []);
+  }, [isListening, systemStatus]);
 
   return (
-    <div className='relative w-full max-w-xl h-[320px] border border-cyan-500/15 rounded-3xl bg-slate-950/50 backdrop-blur-xl overflow-hidden shadow-[inset_0_0_40px_rgba(6,182,212,0.03)] flex items-center justify-center mt-6'>
-      {/* टेक ग्रिड लाइन बैकग्राउंड */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.02)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+    <div className={`relative w-full max-w-lg h-[320px] border rounded-3xl bg-slate-950/40 backdrop-blur-xl overflow-hidden mt-6 transition-all duration-500 ${isListening && systemStatus !== 'processing' ? 'border-red-500/30 shadow-[inset_0_0_40px_rgba(239,68,68,0.05)]' : 'border-cyan-500/15 shadow-[inset_0_0_40px_rgba(6,182,212,0.03)]'}`}>
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.01)_1px,transparent_1px)] bg-[size:30px_30px] pointer-events-none" />
       <canvas ref={canvasRef} className='absolute inset-0 w-full h-full pointer-events-none' />
+      
+      <div className="absolute bottom-4 left-6 right-6 flex justify-between items-center text-[10px] font-mono tracking-widest text-slate-500">
+        <div>SYS_STATUS: <span className={isListening && systemStatus !== 'processing' ? "text-red-400 animate-pulse" : "text-cyan-400"}>{systemStatus === 'processing' ? 'SPEAKING' : isListening ? 'LISTENING' : 'ONLINE'}</span></div>
+        <div>JARVIS_VOICE: V3_LIVE</div>
+      </div>
     </div>
   );
 };
 
+// 🤖 2. MAIN VOICE-POWERED HERO COMPONENT
 export default function Hero() {
-  const roles = [
-    'Data Scientist',
-    'Machine Learning Enthusiast',
-    'Problem Solver',
-    'Data Analyst',
-  ]
+  const roles = ['Data Scientist', 'Machine Learning Enthusiast', 'Problem Solver']
   const [currentRole, setCurrentRole] = useState('')
   const [index, setIndex] = useState(0)
   const [charIndex, setCharIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
 
+  const [isListening, setIsListening] = useState(false)
+  const [jarvisSubtitles, setJarvisSubtitles] = useState('Hello user, how can I help you?')
+  const [systemStatus, setSystemStatus] = useState('listening')
+  
+  const recognitionRef = useRef(null)
+  const shouldListenRef = useRef(false) 
+
+  // Role Typing Effect
   useEffect(() => {
     const currentText = roles[index % roles.length]
     let typingSpeed = isDeleting ? 60 : 100
@@ -250,105 +171,202 @@ export default function Hero() {
     return () => clearTimeout(timeout)
   }, [charIndex, isDeleting, index])
 
+  // 🔊 TEXT TO SPEECH (Updates state to processing on speak)
+  const jarvisSpeak = (textToSpeak, callback) => {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel(); 
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.lang = 'en-US';
+      utterance.pitch = 0.85; 
+      utterance.rate = 1.15;
+      
+      utterance.onstart = () => {
+        setSystemStatus('processing'); // Sets UI to Blue & Shrink
+      };
+      
+      utterance.onend = () => {
+        setSystemStatus('listening'); // Goes back to Listening state
+        if (callback) callback();
+      };
+      window.speechSynthesis.speak(utterance);
+    } else if (callback) {
+      callback();
+    }
+  };
+
+  // 🚀 AUTOMATIC VOICE CORE INITIALIZATION
+  useEffect(() => {
+    shouldListenRef.current = true;
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      setJarvisSubtitles("Speech API not supported.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognitionRef.current = recognition;
+    
+    recognition.lang = 'en-US';
+    recognition.continuous = true; 
+    recognition.interimResults = false;
+
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+
+    recognition.onerror = (event) => {
+      console.error("Jarvis Matrix Error:", event.error);
+    };
+
+    recognition.onend = () => {
+      if (shouldListenRef.current) {
+        try { recognitionRef.current.start(); } catch (e) {}
+      }
+    };
+
+    recognition.onresult = (event) => {
+      const lastResultIndex = event.results.length - 1;
+      const speechToText = event.results[lastResultIndex][0].transcript.toLowerCase().trim();
+      
+      setJarvisSubtitles(`Command: "${speechToText}"`);
+
+      // ⚡ SHORT & CRISP DIALOGUES ONLY
+      if (speechToText.includes('skill')) {
+        setJarvisSubtitles("Opening skills.");
+        jarvisSpeak("Opening skills.", () => {
+          document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' });
+        });
+      } 
+      else if (speechToText.includes('resume') || speechToText.includes('cv')) {
+        setJarvisSubtitles("Opening resume.");
+        jarvisSpeak("Opening resume.", () => {
+          document.getElementById('resume')?.scrollIntoView({ behavior: 'smooth' });
+        });
+      } 
+      else if (speechToText.includes('achievement') || speechToText.includes('award')) {
+        setJarvisSubtitles("Opening milestones.");
+        jarvisSpeak("Showing milestones.", () => {
+          document.getElementById('achievements')?.scrollIntoView({ behavior: 'smooth' });
+        });
+      } 
+      else if (speechToText.includes('about') || speechToText.includes('who are you')) {
+        setJarvisSubtitles("Opening profile.");
+        jarvisSpeak("Showing profile.", () => {
+          document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+        });
+      } 
+      else if (speechToText.includes('contact') || speechToText.includes('talk to') || speechToText.includes('mail')) {
+        setJarvisSubtitles("Opening contact.");
+        jarvisSpeak("Opening contact.", () => {
+          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+        });
+      } 
+      else if (speechToText.includes('project') || speechToText.includes('work')) {
+        setJarvisSubtitles("Opening projects.");
+        jarvisSpeak("Loading projects.", () => {
+          document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+      else if (speechToText.includes('top') || speechToText.includes('clear') || speechToText.includes('home')) {
+        setJarvisSubtitles("Going top.");
+        jarvisSpeak("Going top.", () => {
+          document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+      else if (speechToText.includes('hello') || speechToText.includes('hey') || speechToText.includes('jarvis')) {
+        setJarvisSubtitles("Ready, user.");
+        jarvisSpeak("Ready, user.");
+      } 
+      else {
+        setJarvisSubtitles(`Tracked: "${speechToText}"`);
+        // Reset status to listening if no command matches execution
+        setSystemStatus('listening');
+      }
+    };
+
+    // 🚀 INITIAL BOOT GREETING
+    setJarvisSubtitles("Hello user, I am Ai assistant vixi. You can ask me to navigate to skills, resume, projects, achievements, or contact sections.");
+    jarvisSpeak("Hello user, I am Ai assistant vixi. You can ask me to navigate to skills, resume, projects, achievements, or contact sections.");
+    
+    try { recognition.start(); } catch(e) {}
+
+    return () => {
+      shouldListenRef.current = false;
+      if (recognitionRef.current) recognitionRef.current.stop();
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    };
+  }, []);
+
   return (
-    <section className='min-h-screen flex flex-col items-center justify-center text-center px-4 relative overflow-hidden bg-slate-950 text-gray-100 py-12'>
+    <section id='hero' className='min-h-screen flex flex-col items-center justify-center text-center px-4 relative overflow-hidden bg-slate-950 text-gray-100 py-12'>
 
-      {/* Floating Ambient Glow Orbs */}
-      <motion.div
-        className='absolute top-0 left-0 w-full h-full pointer-events-none'
-        animate={{ opacity: [0.03, 0.08, 0.03] }}
-        transition={{ duration: 6, repeat: Infinity }}
-      >
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className='absolute w-32 h-32 rounded-full blur-3xl bg-gradient-to-r from-blue-500 via-cyan-400 to-indigo-500 opacity-25'
-            style={{
-              top: `${Math.random() * 90}%`,
-              left: `${Math.random() * 90}%`,
-            }}
-            animate={{
-              y: [0, 25, 0],
-              x: [0, -15, 15, 0],
-            }}
-            transition={{
-              duration: 8 + Math.random() * 5,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-        ))}
-      </motion.div>
+      <div className='absolute top-0 left-0 w-full h-full pointer-events-none opacity-30'>
+        <div className='absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-[140px] bg-cyan-500/20' />
+        <div className='absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full blur-[140px] bg-red-500/10' />
+      </div>
 
-      {/* Profile Image */}
-      <motion.img
-        src='/profile.jpg'
-        alt='Dhruv Singh'
-        className='w-40 h-40 rounded-full border-4 border-cyan-400 shadow-[0_0_30px_rgba(6,182,212,0.5)] object-cover hover:shadow-[0_0_50px_rgba(37,99,235,0.8)] transition-all duration-500'
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 0.8 }}
-      />
+      <div className="relative group">
+        <motion.img
+          src='/profile.jpg'
+          alt='Dhruv Singh'
+          className='w-36 h-36 rounded-full border-2 border-cyan-500/30 shadow-[0_0_40px_rgba(6,182,212,0.15)] object-cover group-hover:border-red-500/50 transition-all duration-500'
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.6 }}
+        />
+      </div>
 
-      {/* Name Heading */}
       <motion.h1
-        className='text-4xl md:text-5xl font-extrabold mt-6 text-gray-100 drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]'
-        initial={{ y: -20, opacity: 0 }}
+        className='text-4xl md:text-5xl font-extrabold mt-6 tracking-tight text-gray-100'
+        initial={{ y: -15, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2 }}
+        transition={{ delay: 0.1 }}
       >
-        Hi, I'm{' '}
-        <span className='bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 text-transparent bg-clip-text animate-pulse'>
-          Dhruv Singh
-        </span>
+        Hi, I'm <span className='bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 text-transparent bg-clip-text font-black'>Dhruv Singh</span>
       </motion.h1>
 
-      {/* Typing Subtitle Engine */}
       <motion.h2
-        className='text-xl md:text-2xl font-medium mt-3 text-cyan-300 h-6'
+        className='text-lg md:text-xl font-medium mt-2 text-cyan-400 h-6 tracking-wide'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        {currentRole}<span className='border-r-2 border-cyan-400 animate-pulse ml-1'></span>
+      </motion.h2>
+
+      <div className="w-full flex justify-center relative">
+        <JarvisCoreEngine isListening={isListening} systemStatus={systemStatus} />
+      </div>
+
+      <div className="mt-4 h-8 max-w-md">
+        <p className={`text-xs font-mono tracking-wide transition-all duration-300 ${systemStatus === 'processing' ? 'text-cyan-400' : 'text-red-400'}`}>
+          <span className={`${systemStatus === 'processing' ? 'text-cyan-500' : 'text-red-500'} font-bold`}>[JARVIS_LIVE]: </span>{jarvisSubtitles}
+        </p>
+      </div>
+
+      <motion.div
+        className='flex gap-6 mt-6 text-xl justify-center'
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4 }}
       >
-        {currentRole}
-        <span className='border-r-2 border-cyan-400 animate-pulse ml-1'></span>
-      </motion.h2>
-
-      {/* NEURON ENGINE BOX */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5 }}
-        className="w-full flex justify-center"
-      >
-        <ImmersiveAvatarEngine />
-      </motion.div>
-
-      {/* Social HUD Links Layout */}
-      <motion.div
-        className='flex gap-6 mt-10 text-2xl flex-wrap justify-center'
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.7 }}
-      >
         {[
-          { icon: <FaGithub />, link: 'https://github.com/Dhruv007211' },
-          { icon: <FaLinkedin />, link: 'https://www.linkedin.com/in/dhruv-singh-88969a333' },
-          { icon: <FaInstagram />, link: 'https://www.instagram.com/dhruvionx' },
-          { icon: <FaPhone />, link: 'tel:+919021889562' },
-          { icon: <FaEnvelope />, link: 'mailto:dhruv25072006@gmail.com' },
+          { iconComp: <FaGithub />, link: 'https://github.com/Dhruv007211' },
+          { iconComp: <FaLinkedin />, link: 'https://www.linkedin.com/in/dhruv-singh-88969a333' },
+          { iconComp: <FaInstagram />, link: 'https://www.instagram.com/dhruvionx' },
+          { iconComp: <FaPhone />, link: 'tel:+919021889562' },
+          { iconComp: <FaEnvelope />, link: 'mailto:dhruv25072006@gmail.com' },
         ].map((item, i) => (
-          <motion.a
+          <a
             key={i}
             href={item.link}
             target='_blank'
             rel='noreferrer'
-            className='text-cyan-400 hover:text-blue-300 transition-all duration-300 
-            hover:scale-125 hover:drop-shadow-[0_0_12px_rgba(6,182,212,0.8)]'
-            whileHover={{ rotate: 5 }}
+            className='text-slate-400 hover:text-cyan-400 transition-all duration-300 hover:scale-110'
           >
-            {item.icon}
-          </motion.a>
+            {item.iconComp}
+          </a>
         ))}
       </motion.div>
     </section>

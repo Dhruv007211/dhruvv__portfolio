@@ -79,6 +79,7 @@ export default function Achievements() {
   ];
 
   return (
+    // 🔴 यहाँ id='achievements' पहले से लगा हुआ है, जो वॉयस इंजन कमांड के थ्रू स्मूथ स्क्रॉलिंग हैंडल करेगा
     <section id='achievements' className='py-12'>
       <motion.h2 
         className='text-4xl font-bold text-center mb-8 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text drop-shadow-lg'
