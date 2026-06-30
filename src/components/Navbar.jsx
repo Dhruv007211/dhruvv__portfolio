@@ -123,7 +123,7 @@ export default function Navbar({ dark, setDark }) {
                 : "border-black/10 text-gray-700 bg-white/50"
             }`}
           >
-            <span className="text-cyan-400 font-bold">NEURAL_FEED:</span>{" "}
+            <span className="text-cyan-400 font-bold">Quotes:</span>{" "}
             {quotes[quoteIndex]}
           </div>
         </div>

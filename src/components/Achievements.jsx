@@ -8,7 +8,8 @@ const Counter = ({ value }) => {
   const rounded = useTransform(count, (latest) => Math.round(latest));
 
   useEffect(() => {
-    const controls = animate(count, value, { duration: 2, ease: "easeOut" });
+    // Math.max(0, value) ensures animation never breaks if value is invalid
+    const controls = animate(count, Math.max(0, value), { duration: 2, ease: "easeOut" });
     return controls.stop;
   }, [value, count]);
 
@@ -16,35 +17,46 @@ const Counter = ({ value }) => {
 };
 
 export default function Achievements() {
-  // Yahan humne default values tumhare naye milestone (200+ aur 70+) par set kar di hain
-  // Isse agar API kabhi slow bhi chale, toh bhi tumhara real achievement hi dikhega
-  const [leetcodeCount, setLeetcodeCount] = useState(200); 
-  const [gfgCount, setGfgCount] = useState(70);
+  // Updated default values to your new milestones!
+  const [leetcodeCount, setLeetcodeCount] = useState(230); 
+  const [gfgCount, setGfgCount] = useState(100);
+  const [isLcLive, setIsLcLive] = useState(false);
+  const [isGfgLive, setIsGfgLive] = useState(false);
 
   useEffect(() => {
     const fetchLiveStats = async () => {
+      // Using allorigins proxy to bypass CORS issue smoothly
+      const proxyUrl = "https://api.allorigins.win/get?url=";
+      const targetLcUrl = encodeURIComponent('https://leetcode-api-faisalshabbir.vercel.app/dhruvionx/');
+      const targetGfgUrl = encodeURIComponent('https://geeks-for-geeks-api.vercel.app/user/dhruv252o9e/');
+
       try {
-        // 1. LeetCode API Fetch (Username changed to small 'dhruvionx')
-        const lcResponse = await fetch('https://leetcode-api-faisalshabbir.vercel.app/dhruvionx/');
+        // 1. LeetCode API Fetch via Proxy
+        const lcResponse = await fetch(`${proxyUrl}${targetLcUrl}`);
         if (lcResponse.ok) {
-          const lcData = await lcResponse.json();
-          // Agar data mil gaya toh live count set ho jayega
-          if (lcData && lcData.totalSolved) {
-            setLeetcodeCount(lcData.totalSolved);
+          const proxyData = await lcResponse.json();
+          // allorigins returns data as a stringified JSON inside .contents
+          const lcData = JSON.parse(proxyData.contents);
+          
+          if (lcData && (lcData.totalSolved || lcData.solvedProblem)) {
+            setLeetcodeCount(lcData.totalSolved || lcData.solvedProblem);
+            setIsLcLive(true);
           }
         }
 
-        // 2. GeeksforGeeks API Fetch
-        // GFG ka HTML structure change hota rehta h, isliye safe-side fetch ko try-catch mein rakha h
-        const gfgResponse = await fetch('https://geeks-for-geeks-api.vercel.app/user/dhruv252o9e/');
+        // 2. GeeksforGeeks API Fetch via Proxy
+        const gfgResponse = await fetch(`${proxyUrl}${targetGfgUrl}`);
         if (gfgResponse.ok) {
-          const gfgData = await gfgResponse.json();
-          if (gfgData && gfgData.totalSolved) {
-            setGfgCount(gfgData.totalSolved);
+          const proxyData = await gfgResponse.json();
+          const gfgData = JSON.parse(proxyData.contents);
+          
+          if (gfgData && (gfgData.totalSolved || gfgData.total_problems_solved)) {
+            setGfgCount(gfgData.totalSolved || gfgData.total_problems_solved);
+            setIsGfgLive(true);
           }
         }
       } catch (error) {
-        console.error("Live stats fetch karne mein dikkat aayi, using current updates:", error);
+        console.error("Live stats fetch karne mein dikkat aayi, using local milestones:", error);
       }
     };
 
@@ -56,7 +68,17 @@ export default function Achievements() {
       title: 'DSA Proficiency (Java)', 
       detail: (
         <span>
-          Strong problem solving & OOP, solved <span className="text-yellow-400 font-bold"><Counter value={leetcodeCount} />+</span> problems on LeetCode & <span className="text-green-400 font-bold"><Counter value={gfgCount} />+</span> problems on GeeksforGeeks
+          Strong problem solving & OOP, solved{' '}
+          <span className="text-yellow-400 font-bold">
+            <Counter value={leetcodeCount} />
+            {!isLcLive && '+'}
+          </span>{' '}
+          problems on LeetCode &{' '}
+          <span className="text-green-400 font-bold">
+            <Counter value={gfgCount} />
+            {!isGfgLive && '+'}
+          </span>{' '}
+          problems on GeeksforGeeks
         </span>
       ),
       links: [
@@ -79,7 +101,6 @@ export default function Achievements() {
   ];
 
   return (
-    // 🔴 यहाँ id='achievements' पहले से लगा हुआ है, जो वॉयस इंजन कमांड के थ्रू स्मूथ स्क्रॉलिंग हैंडल करेगा
     <section id='achievements' className='py-12'>
       <motion.h2 
         className='text-4xl font-bold text-center mb-8 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text drop-shadow-lg'

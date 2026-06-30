@@ -25,13 +25,23 @@ const projects = [
     tools: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'MS Excel', 'VS Code', 'Jupyter Notebook'],
     link: null
   },
-  { 
-    title: 'Mini Data Analyst – Automated Data Manipulation & Analysis', 
-    desc: 'Automatically cleans, manipulates, and analyzes datasets, generating instant insights and visual reports.', 
-    tech: ['Python','Pandas','NumPy','Matplotlib','Seaborn'],
-    tools: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'Streamlit', 'Flask', 'MS Excel', 'VS Code', 'Jupyter Notebook'],
-    link: 'https://mini-data-analyst-1.onrender.com'
-  },
+ {
+  title: 'Heart Disease Analytics Dashboard',
+  desc: 'Developed an interactive healthcare analytics platform using MySQL, Tableau, SQL, Python, and Flask. The project includes SQL-based data analysis, KPI cards, interactive dashboards, Tableau Story, and responsive web integration for visualizing heart disease trends and supporting data-driven healthcare decisions.',
+  tech: ['Tableau', 'MySQL', 'SQL', 'Python', 'Flask'],
+  tools: [
+    'Tableau',
+    'MySQL',
+    'Flask',
+    'Python',
+    'SQL',
+    'VS Code',
+    'Git',
+    'GitHub',
+    'Render'
+  ],
+  link: 'https://heart-analysis-2.onrender.com'
+},
 ]
 
 export default function Projects(){
