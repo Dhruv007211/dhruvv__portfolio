@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 
 export default function Resume() {
-  const resumePath = "/dhruv_singh_resume1.pdf";
+ const resumePath = "/Resume.pdf?v=1";;
 
   // 1️⃣ Main Layout Stagger
   const containerVariants = {
