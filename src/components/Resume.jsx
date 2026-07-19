@@ -2,7 +2,9 @@ import React from "react";
 import { motion } from "framer-motion";
 
 export default function Resume() {
- const resumePath = "/Resume.pdf?v=1";;
+  // ⚡ PERMANENT FIX: तुम्हारी नई फाइल 'REsume.pdf' के नाम के हिसाब से पाथ सेट कर दिया है
+  // साथ ही डायनेमिक टाइमस्टैम्प भी लगा दिया है ताकि फोन और लैपटॉप पर हमेशा तुरंत अपडेट हो
+  const getFreshResumePath = () => `/REsume.pdf?t=${new Date().getTime()}`;
 
   // 1️⃣ Main Layout Stagger
   const containerVariants = {
@@ -13,7 +15,7 @@ export default function Resume() {
     },
   };
 
-  // 2️⃣ Text Reveal (With subtle blur dissolve)
+  // 2️⃣ Text Reveal
   const textVariants = {
     hidden: { opacity: 0, y: -30, filter: "blur(10px)" },
     visible: {
@@ -71,12 +73,9 @@ export default function Resume() {
       
       {/* 🌌 --- DATA SCIENCE BACKGROUND FLOATING MATRIX --- */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        
-        {/* Soft Ambient Core Glows */}
         <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[140px] mix-blend-screen" />
         <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[500px] h-[500px] bg-fuchsia-600/10 rounded-full blur-[140px] mix-blend-screen" />
 
-        {/* Abstract Floating Data Node 1 (Top Left) */}
         <motion.div 
           variants={floatingAnimation(0, 7)} 
           animate="animate"
@@ -90,7 +89,6 @@ export default function Resume() {
           <div>loss: 0.0234</div>
         </motion.div>
 
-        {/* Abstract Floating Data Node 2 (Bottom Right) */}
         <motion.div 
           variants={floatingAnimation(2, 8)} 
           animate="animate"
@@ -104,7 +102,6 @@ export default function Resume() {
           <div>accuracy: 98.4%</div>
         </motion.div>
 
-        {/* Floating Mathematical Curve Concept (Center Left) */}
         <motion.div 
           variants={floatingAnimation(1, 6.5)}
           animate="animate"
@@ -116,13 +113,11 @@ export default function Resume() {
           <span className="absolute -top-4 left-2 text-[10px] font-mono text-slate-600">f(x) weight</span>
         </motion.div>
 
-        {/* Floating Connected Mesh Dot 1 */}
         <motion.div 
           variants={floatingAnimation(3, 5)} 
           animate="animate"
           className="absolute top-1/3 right-[15%] w-3 h-3 bg-indigo-500/30 rounded-full blur-[1px] shadow-[0_0_12px_#6366f1]"
         />
-        {/* Floating Connected Mesh Dot 2 */}
         <motion.div 
           variants={floatingAnimation(0.5, 9)} 
           animate="animate"
@@ -138,7 +133,6 @@ export default function Resume() {
         viewport={{ once: true, margin: "-100px" }}
         className="relative z-10 max-w-4xl mx-auto text-center px-4"
       >
-        {/* Title */}
         <motion.h2
           variants={textVariants}
           className="text-5xl md:text-6xl font-extrabold tracking-tight bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(168,85,247,0.15)]"
@@ -146,7 +140,6 @@ export default function Resume() {
           My Resume
         </motion.h2>
 
-        {/* Subtitle */}
         <motion.p
           variants={textVariants}
           className="mt-4 text-slate-400 text-lg max-w-md mx-auto tracking-wide"
@@ -154,12 +147,11 @@ export default function Resume() {
           Check out my professional journey or download my resume.
         </motion.p>
 
-        {/* Buttons Action Control */}
         <motion.div className="mt-14 flex justify-center gap-6 flex-wrap items-center">
           
           {/* OPEN RESUME */}
           <motion.a
-            href={resumePath}
+            href={getFreshResumePath()}
             target="_blank"
             rel="noopener noreferrer"
             type="application/pdf"
@@ -176,7 +168,7 @@ export default function Resume() {
 
           {/* DOWNLOAD RESUME */}
           <motion.a
-            href={resumePath}
+            href={getFreshResumePath()}
             download="Dhruv_Singh_Resume.pdf"
             variants={buttonRevealVariants}
             whileHover={buttonHoverTap.hover}
