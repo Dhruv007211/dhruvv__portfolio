@@ -40,7 +40,7 @@ const projects = [
     'GitHub',
     'Render'
   ],
-  link: 'https://heart-analysis-2.onrender.com'
+  link: 'https://heart-analysis-3.onrender.com'
 },
 ]
 
